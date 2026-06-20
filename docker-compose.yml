@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Сервер приложения
+  app:
+    build: .
+    container_name: creator-dashboard-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_SECRET=my_super_secret_key_2026
+      - MONGODB_URI=mongodb://mongodb:27017/creator_dashboard
+    depends_on:
+      - mongodb
+    volumes:
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+
+  # MongoDB
+  mongodb:
+    image: mongo:7.0
+    container_name: creator-dashboard-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+  # MongoDB Compass (опционально, для просмотра данных)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: creator-dashboard-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
