@@ -7,7 +7,7 @@ const titles = {
     content: 'Контент',
     monetization: 'Монетизация',
     audience: 'Аудитория',
-    comms: 'Коммуникации',
+    // comms: 'Коммуникации',  ← УДАЛЕНО
     analytics: 'Аналитика',
     finance: 'Финансы и выплаты',
     settings: 'Настройки',
@@ -44,11 +44,7 @@ function bindTabs(id, cb) {
 
 bindTabs('contentTabs');
 bindTabs('chartTabs', renderBars);
-bindTabs('commTabs', name => {
-    document.querySelectorAll('.comm-pane').forEach(p => p.style.display = 'none');
-    const pane = document.getElementById('comm-' + name);
-    if (pane) pane.style.display = 'block';
-});
+
 
 // ============================================
 // ФИЛЬТРЫ
@@ -93,8 +89,8 @@ document.querySelectorAll('#contentTabs .tab').forEach(tab => {
             'Видео': 'video',
             'Аудио': 'audio',
             'Галерея': 'gallery',
-            'Подкасты': 'podcast',
-            'Коллекции': 'collection'
+            // 'Подкасты': 'podcast'  ← УДАЛЕНО
+            // 'Коллекции': 'collection'  ← УДАЛЕНО
         };
         
         const type = this.textContent.trim();
@@ -144,7 +140,7 @@ renderBars();
 const topData = [
     { t: 'Секретный гайд по Figma 2026', type: 'article', m: '2 990 ₽' },
     { t: 'Урок по анимации интерфейсов', type: 'video', m: '1 499 ₽' },
-    { t: 'Подкаст: будущее дизайна', type: 'podcast', m: '1 240 ₽' },
+    // { t: 'Подкаст: будущее дизайна', type: 'podcast', m: '1 240 ₽' },  ← УДАЛЕНО
     { t: 'Коллекция UI-китов', type: 'gallery', m: '980 ₽' },
     { t: 'Разбор кейса для подписчиков', type: 'audio', m: '640 ₽' }
 ];
@@ -153,9 +149,9 @@ const icons = {
     article: 'fa-file-lines',
     video: 'fa-play',
     audio: 'fa-headphones',
-    gallery: 'fa-images',
-    podcast: 'fa-microphone',
-    collection: 'fa-folder'
+    gallery: 'fa-images'
+    // podcast: 'fa-microphone'  ← УДАЛЕНО
+    // collection: 'fa-folder'  ← УДАЛЕНО
 };
 
 function renderTopContent() {
@@ -453,12 +449,12 @@ renderTiers();
 
 const colors = ['#FF6B1A', '#9333EA', '#0284C7', '#16A34A', '#DC2626', '#EA580C'];
 const aud = [
-    { n: 'Алексей Морозов', e: 'alex@mail.ru', lvl: 'prem', ll: 'Премиум', d: '4 мес', p: '1 996 ₽', a: 'сегодня', risk: 12 },
-    { n: 'Мария Волкова', e: 'maria@gmail.com', lvl: 'vip', ll: 'VIP', d: '8 мес', p: '11 992 ₽', a: 'вчера', risk: 8 },
-    { n: 'Дмитрий Лебедев', e: 'dl@yandex.ru', lvl: 'base', ll: 'Базовый', d: '2 мес', p: '398 ₽', a: '32 дня назад', risk: 78 },
-    { n: 'Ольга Соколова', e: 'olga@mail.ru', lvl: 'prem', ll: 'Премиум', d: '6 мес', p: '2 994 ₽', a: '3 дня назад', risk: 34 },
-    { n: 'Игорь Новиков', e: 'igor@gmail.com', lvl: 'base', ll: 'Базовый', d: '1 мес', p: '199 ₽', a: '45 дней назад', risk: 85 },
-    { n: 'Елена Кузнецова', e: 'elena@mail.ru', lvl: 'prem', ll: 'Премиум', d: '3 мес', p: '1 497 ₽', a: 'сегодня', risk: 15 }
+    { n: 'Алексей Морозов', lvl: 'prem', ll: 'Премиум', d: '4 мес', p: '1 996 ₽', a: 'сегодня', risk: 12 },
+    { n: 'Мария Волкова', lvl: 'vip', ll: 'VIP', d: '8 мес', p: '11 992 ₽', a: 'вчера', risk: 8 },
+    { n: 'Дмитрий Лебедев', lvl: 'base', ll: 'Базовый', d: '2 мес', p: '398 ₽', a: '32 дня назад', risk: 78 },
+    { n: 'Ольга Соколова', lvl: 'prem', ll: 'Премиум', d: '6 мес', p: '2 994 ₽', a: '3 дня назад', risk: 34 },
+    { n: 'Игорь Новиков', lvl: 'base', ll: 'Базовый', d: '1 мес', p: '199 ₽', a: '45 дней назад', risk: 85 },
+    { n: 'Елена Кузнецова', lvl: 'prem', ll: 'Премиум', d: '3 мес', p: '1 497 ₽', a: 'сегодня', risk: 15 }
 ];
 
 function renderAudience() {
@@ -467,11 +463,12 @@ function renderAudience() {
     el.innerHTML = aud.map((u, i) => {
         const rc = u.risk > 60 ? 'var(--red)' : u.risk > 30 ? 'var(--orange)' : 'var(--green)';
         return `<tr onclick="audCard('${u.n}','${u.ll}','${u.p}')">
-            <td style="display:flex;gap:10px;align-items:center"><div class="mini-avatar" style="background:${colors[i%6]}">${u.n.split(' ').map(x=>x[0]).join('')}</div><div><b style="font-size:13px">${u.n}</b><div class="small muted">${u.e}</div></div></td>
+            <td style="display:flex;gap:10px;align-items:center"><div class="mini-avatar" style="background:${colors[i%6]}">${u.n.split(' ').map(x=>x[0]).join('')}</div><div><b style="font-size:13px">${u.n}</b></div></td>
             <td><span class="pill ${u.lvl}">${u.ll}</span></td>
-            <td>${u.d}</td><td><b>${u.p}</b></td><td class="small muted">${u.a}</td>
+            <td>${u.d}</td><td><b>${u.p}</b></td>
+            <td class="small muted">${u.a}</td>
             <td><span class="risk-bar"><span class="risk-fill" style="width:${u.risk}%;background:${rc}"></span></span><b style="color:${rc};font-size:12px">${u.risk}%</b></td>
-            <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();toast('Сообщение подписчику отправлено')"><i class="fa-solid fa-paper-plane"></i></button></td>
+            <!-- КНОПКА УДАЛЕНА -->
         </tr>`;
     }).join('');
 }
@@ -492,40 +489,8 @@ function audCard(n, lvl, p) {
 // ЧАТЫ И КОММЕНТАРИИ
 // ============================================
 
-function renderChats() {
-    const el = document.getElementById('chatRows');
-    if (!el) return;
-    el.innerHTML = aud.slice(0, 4).map((u, i) =>
-        `<div class="list-row" style="cursor:pointer" onclick="toast('Открыт чат с ${u.n}')">
-            <div class="mini-avatar" style="background:${colors[i%6]}">${u.n.split(' ').map(x=>x[0]).join('')}</div>
-            <div><b style="font-size:13.5px">${u.n}</b><div class="small muted">Спасибо за гайд, очень полезно!</div></div>
-            ${i<2?'<span class="nav-badge" style="margin-left:auto">2</span>':'<span class="small muted" style="margin-left:auto">читать</span>'}
-        </div>`
-    ).join('');
-}
-renderChats();
 
-function renderComments() {
-    const el = document.getElementById('commentRows');
-    if (!el) return;
-    const comments = [
-        { n: 'Алексей М.', t: 'Отличный разбор! А будет вторая часть?', post: '10 принципов UI' },
-        { n: 'Мария В.', t: 'Спасибо, всё по делу 🧡', post: 'Подкаст #11' },
-        { n: 'Гость', t: 'Спам-ссылка...', post: 'Урок по анимации' }
-    ];
-    el.innerHTML = comments.map(c =>
-        `<div class="list-row">
-            <div class="mini-avatar" style="background:${colors[Math.floor(Math.random()*6)]}">${c.n[0]}</div>
-            <div><b style="font-size:13.5px">${c.n}</b> <span class="small muted">· ${c.post}</span><div class="small">${c.t}</div></div>
-            <div style="margin-left:auto;display:flex;gap:6px">
-                <button class="btn btn-ghost btn-sm" onclick="toast('Комментарий одобрен')"><i class="fa-solid fa-check"></i></button>
-                <button class="btn btn-ghost btn-sm" onclick="toast('Ответ отправлен')"><i class="fa-solid fa-reply"></i></button>
-                <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="toast('Комментарий удалён')"><i class="fa-solid fa-trash"></i></button>
-            </div>
-        </div>`
-    ).join('');
-}
-renderComments();
+
 
 // ============================================
 // МОДАЛЬНЫЕ ОКНА
@@ -774,8 +739,8 @@ function openCreateType() {
         ['Видео', 'fa-play'],
         ['Аудио', 'fa-headphones'],
         ['Галерея', 'fa-images'],
-        ['Подкаст', 'fa-microphone'],
-        ['Коллекция', 'fa-folder']
+        // ['Подкаст', 'fa-microphone']  ← УДАЛЕНО
+        // ['Коллекция', 'fa-folder']  ← УДАЛЕНО
     ];
     openModal('Что создаём?', `<div class="grid-4" style="grid-template-columns:repeat(3,1fr);gap:12px">
         ${types.map(t => `<button class="quick-btn" onclick="openCreateForm('${t[0]}')">
@@ -1196,42 +1161,7 @@ function toggleTheme() {
 // AI АССИСТЕНТ
 // ============================================
 
-function toggleAI() {
-    const panel = document.getElementById('aiPanel');
-    if (panel) panel.classList.toggle('show');
-}
 
-const aiReplies = {
-    '5 тем для постов': 'Вот 5 тем на основе ваших публикаций:\n1. Тренды UI 2026\n2. Анимация микровзаимодействий\n3. Дизайн-системы с нуля\n4. Психология цвета\n5. Разбор провальных интерфейсов',
-    'Когда выложить видео?': 'Лучшее время для вашей аудитории — четверг 19:00. Вовлечённость в этот слот на 24% выше среднего.',
-    'План на месяц': 'Составил план: 4 статьи (пн), 2 видео (чт), 2 подкаста (сб). Хотите, чтобы я создал черновики и расставил даты?'
-};
-
-function aiQuick(el) {
-    pushAI(el.textContent, 'user');
-    setTimeout(() => pushAI(aiReplies[el.textContent] || 'Готовлю ответ...', 'bot'), 500);
-}
-
-function aiSend() {
-    const i = document.getElementById('aiInput');
-    if (!i) return;
-    const v = i.value.trim();
-    if (!v) return;
-    pushAI(v, 'user');
-    i.value = '';
-    setTimeout(() => pushAI('Отличный запрос! Анализирую данные вашего кабинета и готовлю развёрнутый ответ с рекомендациями.', 'bot'), 600);
-}
-
-function pushAI(text, who) {
-    const m = document.getElementById('aiMsgs');
-    if (!m) return;
-    const d = document.createElement('div');
-    d.className = 'ai-msg ' + who;
-    d.style.whiteSpace = 'pre-line';
-    d.textContent = text;
-    m.appendChild(d);
-    m.scrollTop = m.scrollHeight;
-}
 
 // ============================================
 // ЗАГРУЗКА ПРИ СТАРТЕ

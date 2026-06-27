@@ -25,7 +25,7 @@
             <div class="brand">
                 <div class="brand-logo"><i class="fa-solid fa-feather"></i></div>
                 <div>
-                    <div class="brand-name">Creator</div>
+                    <div class="brand-name">SubMart</div>
                     <div class="brand-sub">Кабинет автора</div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="nav-item" data-page="monetization"><i class="fa-solid fa-crown"></i> Монетизация</div>
                 <div class="nav-group-title">Рост</div>
                 <div class="nav-item" data-page="audience"><i class="fa-solid fa-users"></i> Аудитория</div>
-                <div class="nav-item" data-page="comms"><i class="fa-solid fa-comments"></i> Коммуникации <span class="nav-badge">4</span></div>
+                <!-- <div class="nav-item" data-page="comms"><i class="fa-solid fa-comments"></i> Коммуникации <span class="nav-badge">4</span></div> -->  <!-- УДАЛЕНО -->
                 <div class="nav-item" data-page="analytics"><i class="fa-solid fa-chart-pie"></i> Аналитика</div>
                 <div class="nav-group-title">Бизнес</div>
                 <div class="nav-item" data-page="finance"><i class="fa-solid fa-wallet"></i> Финансы</div>
@@ -52,10 +52,10 @@
         <div class="main">
             <header class="topbar">
                 <div class="page-title" id="pageTitle">Главная</div>
-                <div class="search-box">
+                <!--div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input placeholder="Поиск по кабинету...">
-                </div>
+                </div/-->
                 <div class="top-right">
                     <button class="preview-btn" onclick="toast('Открыт публичный профиль автора')"><i class="fa-solid fa-eye"></i> Публичный профиль</button>
                     <div class="top-stat"><div class="num">67</div><div class="lbl">подписок</div></div>
@@ -93,7 +93,8 @@
                     </div>
 
                     <div class="grid-2 mt">
-                        <div class="card">
+                        <div class="card" style="grid-column: 1 / -1;">
+                            <!-- График выручки на всю ширину -->
                             <div class="section-head">
                                 <div class="section-title">Выручка за 30 дней</div>
                                 <div class="chart-tabs" id="chartTabs">
@@ -106,30 +107,24 @@
                             <div class="bars" id="bars"></div>
                             <div style="margin-top:16px"><button class="btn btn-ghost btn-sm" onclick="toast('График экспортирован в PNG')"><i class="fa-solid fa-download"></i> Экспорт</button></div>
                         </div>
-                        <div class="card forecast">
-                            <div class="lbl"><i class="fa-solid fa-wand-magic-sparkles"></i> Прогноз дохода · июль</div>
-                            <div class="val">52 300 ₽</div>
-                            <div class="sub">±5% · на основе оттока, числа подписчиков и сезонности</div>
-                            <button class="btn" onclick="toast('Прогноз: Базовый 18 200₽ · Премиум 24 900₽ · VIP 9 200₽')"><i class="fa-solid fa-list"></i> Детали по уровням</button>
-                        </div>
                     </div>
 
                     <div class="grid-2 mt">
                         <div class="card">
-                            <div class="section-head"><div class="section-title">Топ-5 материалов по доходам</div></div>
+                            <div class="section-head"><div class="section-title">Топ материалов по доходам</div></div>
                             <div id="topContent"></div>
                         </div>
-                        <div class="card insight">
+                        <!--div class="card insight">
                             <div class="ic"><i class="fa-solid fa-lightbulb"></i></div>
                             <div>
                                 <b style="font-size:14px">AI-инсайт дня</b>
                                 <p class="small" style="margin:6px 0 12px">Ваш подкаст про дизайн собрал на <b>30% больше</b> прослушиваний, чем в прошлом месяце. Попробуйте выпустить второй выпуск в ближайшие 3 дня.</p>
                                 <button class="btn btn-primary btn-sm" onclick="goto('analytics')"><i class="fa-solid fa-arrow-right"></i> Подробнее</button>
                             </div>
-                        </div>
+                        </div-->
                     </div>
 
-                    <div class="mt">
+                    <!--div class="mt">
                         <div class="section-head"><div class="section-title">Быстрые действия</div></div>
                         <div class="quick">
                             <button class="quick-btn" onclick="openCreateType()"><i class="fa-solid fa-plus"></i><span>Создать пост</span></button>
@@ -137,7 +132,7 @@
                             <button class="quick-btn" onclick="openWithdraw()"><i class="fa-solid fa-money-bill-transfer"></i><span>Вывести деньги</span></button>
                             <button class="quick-btn" onclick="goto('audience')"><i class="fa-solid fa-users-viewfinder"></i><span>Новые подписчики</span></button>
                         </div>
-                    </div>
+                    </div-->
                 </section>
 
                 <!-- CONTENT -->
@@ -149,8 +144,8 @@
                             <div class="tab">Видео</div>
                             <div class="tab">Аудио</div>
                             <div class="tab">Галерея</div>
-                            <div class="tab">Подкасты</div>
-                            <div class="tab">Коллекции</div>
+                            <!-- <div class="tab">Подкасты</div> -->  <!-- УДАЛЕНО -->
+                            <!-- <div class="tab">Коллекции</div> -->  <!-- УДАЛЕНО -->
                         </div>
                         <button class="btn btn-primary" style="margin-left:auto" onclick="openCreateType()"><i class="fa-solid fa-plus"></i> Создать контент</button>
                     </div>
@@ -194,14 +189,14 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card forecast">
+                        <!--div class="card forecast">
                             <div class="lbl"><i class="fa-solid fa-wand-magic-sparkles"></i> Динамическое ценообразование</div>
                             <p class="small" style="margin:12px 0 8px;color:rgba(255,255,255,.9)">AI рекомендует поднять цену уровня «Премиум» с 499₽ до 549₽ — ожидаемый рост выручки <b>+8%</b> при оттоке менее 2%.</p>
                             <div style="display:flex;gap:8px;margin-top:12px">
                                 <button class="btn" onclick="toast('A/B-тест цены запущен на 7 дней')">Запустить A/B-тест</button>
                                 <button class="btn" style="background:rgba(255,255,255,.1)" onclick="toast('Рекомендация отклонена')">Отклонить</button>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                 </section>
 
@@ -220,7 +215,7 @@
                             <div class="chip">Премиум</div>
                             <div class="chip">VIP</div>
                             <div class="chip">Спящие</div>
-                            <div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по имени или email"></div>
+                            <!--div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по имени или email"></div-->
                         </div>
                         <table>
                             <thead><tr><th>Подписчик</th><th>Уровень</th><th>С нами</th><th>Заплатил</th><th>Активность</th><th>Риск оттока</th><th></th></tr></thead>
@@ -230,42 +225,7 @@
                 </section>
 
                 <!-- COMMS -->
-                <section class="page" id="page-comms">
-                    <div class="tabs" id="commTabs" style="margin-bottom:18px;width:fit-content">
-                        <div class="tab active">Рассылки</div>
-                        <div class="tab">Чаты</div>
-                        <div class="tab">Комментарии</div>
-                        <div class="tab">Боты</div>
-                    </div>
 
-                    <div id="comm-Рассылки" class="comm-pane">
-                        <div class="card">
-                            <div class="section-head"><div class="section-title">Email & Push рассылки</div><button class="btn btn-primary btn-sm" onclick="toast('Открыт редактор рассылки')"><i class="fa-solid fa-paper-plane"></i> Новая рассылка</button></div>
-                            <table>
-                                <thead><tr><th>Тема</th><th>Аудитория</th><th>Доставлено</th><th>Открыто</th><th>Кликов</th><th>Статус</th></tr></thead>
-                                <tbody>
-                                    <tr><td><b>Новый гайд по Figma уже здесь</b></td><td>Все подписчики</td><td>67</td><td>49 (73%)</td><td>21</td><td><span class="tag pub">Отправлено</span></td></tr>
-                                    <tr><td><b>Скидка для возвращения 🧡</b></td><td>Спящие</td><td>13</td><td>5 (38%)</td><td>3</td><td><span class="tag pub">Отправлено</span></td></tr>
-                                    <tr><td><b>Анонс подкаста #12</b></td><td>Премиум</td><td>—</td><td>—</td><td>—</td><td><span class="tag sched">Запланировано</span></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="comm-Чаты" class="comm-pane" style="display:none">
-                        <div class="card insight"><div class="ic"><i class="fa-solid fa-robot"></i></div><div><b style="font-size:14px">AI-агент автоответов включён</b><p class="small" style="margin-top:4px">Отвечает на частые вопросы подписчиков в вашем стиле. За неделю обработано 38 сообщений.</p></div></div>
-                        <div class="card mt"><div class="section-title" style="margin-bottom:14px">Активные чаты</div><div id="chatRows"></div></div>
-                    </div>
-                    <div id="comm-Комментарии" class="comm-pane" style="display:none">
-                        <div class="card"><div class="section-title" style="margin-bottom:14px">Комментарии на модерации</div><div id="commentRows"></div></div>
-                    </div>
-                    <div id="comm-Боты" class="comm-pane" style="display:none">
-                        <div class="cols-2">
-                            <div class="card"><div style="display:flex;gap:12px;align-items:center"><div class="ctype" style="background:#E0F2FE;color:#0284C7;width:42px;height:42px;font-size:18px"><i class="fa-brands fa-telegram"></i></div><div><b>Telegram-бот</b><p class="small muted">Уведомления о постах · команды</p></div><div class="switch on" style="margin-left:auto" onclick="this.classList.toggle('on');toast('Настройки бота обновлены')"></div></div></div>
-                            <div class="card"><div style="display:flex;gap:12px;align-items:center"><div class="ctype" style="background:#EEF2FF;color:#5865F2;width:42px;height:42px;font-size:18px"><i class="fa-brands fa-discord"></i></div><div><b>Discord-бот</b><p class="small muted">Закрытый сервер для VIP</p></div><div class="switch" style="margin-left:auto" onclick="this.classList.toggle('on');toast('Настройки бота обновлены')"></div></div></div>
-                        </div>
-                        <div class="card mt"><div class="section-title">Визуальный конфигуратор</div><p class="small muted" style="margin-top:8px">Соберите сценарий бота без кода: триггер → действие → ответ.</p><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="toast('Открыт конструктор сценариев')"><i class="fa-solid fa-diagram-project"></i> Открыть конструктор</button></div>
-                    </div>
-                </section>
 
                 <!-- ANALYTICS -->
                 <section class="page" id="page-analytics">
@@ -277,47 +237,23 @@
                     </div>
 
                     <div class="card mt">
-                        <div class="section-head"><div class="section-title">Воронка конверсии</div><button class="btn btn-ghost btn-sm" onclick="toast('Создан A/B-тест воронки')"><i class="fa-solid fa-flask"></i> A/B-тест</button></div>
+                        <div class="section-head"><div class="section-title">Воронка конверсии</div></div>
                         <div class="funnel-row"><div class="funnel-label">Посетители профиля</div><div class="funnel-track"><div class="funnel-fill" style="width:100%">12 400</div></div><div class="funnel-pct">100%</div></div>
                         <div class="funnel-row"><div class="funnel-label">Кликнули на подписку</div><div class="funnel-track"><div class="funnel-fill" style="width:42%">5 208</div></div><div class="funnel-pct">42%</div></div>
                         <div class="funnel-row"><div class="funnel-label">Начали оформление</div><div class="funnel-track"><div class="funnel-fill" style="width:21%">2 604</div></div><div class="funnel-pct">21%</div></div>
                         <div class="funnel-row"><div class="funnel-label">Успешно оплатили</div><div class="funnel-track"><div class="funnel-fill" style="width:8.4%">1 042</div></div><div class="funnel-pct">8.4%</div></div>
                     </div>
 
-                    <div class="grid-2 mt">
-                        <div class="card">
-                            <div class="section-title" style="margin-bottom:14px">Прогноз дохода · 6 месяцев</div>
-                            <div class="bars" id="forecastBars" style="height:150px"></div>
-                            <div class="small muted" style="margin-top:12px"><span style="color:var(--green)">●</span> Оптимистичный &nbsp; <span style="color:var(--orange)">●</span> Реалистичный &nbsp; <span style="color:var(--muted)">●</span> Пессимистичный</div>
-                        </div>
-                        <div class="card">
-                            <div class="section-title" style="margin-bottom:14px">Когортный анализ (retention)</div>
-                            <table>
-                                <thead><tr><th>Когорта</th><th>Старт</th><th>1 мес</th><th>3 мес</th><th>6 мес</th></tr></thead>
-                                <tbody>
-                                    <tr><td>Янв 2026</td><td>100%</td><td>82%</td><td>61%</td><td>48%</td></tr>
-                                    <tr><td>Фев 2026</td><td>100%</td><td>85%</td><td>64%</td><td>—</td></tr>
-                                    <tr><td>Мар 2026</td><td>100%</td><td>88%</td><td>—</td><td>—</td></tr>
-                                    <tr><td>Апр 2026</td><td>100%</td><td>91%</td><td>—</td><td>—</td></tr>
-                                </tbody>
-                            </table>
-                            <button class="btn btn-ghost btn-sm mt" onclick="toast('Отчёт экспортирован в CSV')"><i class="fa-solid fa-download"></i> Экспорт CSV</button>
-                        </div>
-                    </div>
+                    
                 </section>
 
                 <!-- FINANCE -->
                 <section class="page" id="page-finance">
-                    <div class="grid-4">
+                    <div class="grid-4" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="card">
                             <div class="lbl muted small">Доступно к выводу</div>
                             <div class="balance-big" style="color:var(--green)">42 891 ₽</div>
                             <button class="btn btn-primary btn-sm mt" onclick="openWithdraw()"><i class="fa-solid fa-arrow-down-to-line"></i> Вывести</button>
-                        </div>
-                        <div class="card">
-                            <div class="lbl muted small">Забронировано (резервный фонд)</div>
-                            <div class="balance-big">8 400 ₽</div>
-                            <span class="badge-guard" style="margin-top:10px"><i class="fa-solid fa-shield-halved"></i> Гарантировано</span>
                         </div>
                         <div class="card">
                             <div class="lbl muted small">В обработке</div>
@@ -345,7 +281,7 @@
                             </table>
                         </div>
                         <div class="card">
-                            <div class="section-title" style="margin-bottom:14px">Прозрачность комиссий</div>
+                            
                             <div class="list-row"><span class="small">Комиссия за подписки</span><span class="row-money" style="color:var(--ink)">4 280 ₽</span></div>
                             <div class="list-row"><span class="small">Комиссия за разовые покупки</span><span class="row-money" style="color:var(--ink)">1 120 ₽</span></div>
                             <div class="list-row"><span class="small">Комиссия за вывод</span><span class="row-money" style="color:var(--ink)">150 ₽</span></div>
@@ -363,7 +299,7 @@
                             <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px">
                                 <div class="avatar" style="width:60px;height:60px;font-size:20px;border-radius:16px">ИС</div>
                                 <div><b>Иван Соколов</b><div class="small muted">Дизайн и анимация</div></div>
-                                <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('Аватар обновлён')">Сменить</button>
+                                
                             </div>
                             <div class="field"><label>Имя / бренд</label><input value="Иван Соколов"></div>
                             <div class="field"><label>Краткое описание</label><textarea rows="2">Учу дизайну и анимации в Figma. Подкасты и гайды каждую неделю.</textarea></div>
@@ -371,16 +307,13 @@
                             <button class="btn btn-primary" onclick="toast('Профиль сохранён')"><i class="fa-solid fa-check"></i> Сохранить</button>
                         </div>
                         <div class="card">
-                            <div class="section-title" style="margin-bottom:16px">Команда</div>
-                            <div class="list-row"><div class="mini-avatar" style="background:var(--orange)">АП</div><div><b style="font-size:13.5px">Анна П.</b><div class="small muted">Редактор</div></div><span class="pill prem" style="margin-left:auto">Активен</span></div>
-                            <div class="list-row"><div class="mini-avatar" style="background:#9333EA">МК</div><div><b style="font-size:13.5px">Максим К.</b><div class="small muted">Аналитик</div></div><span class="pill prem" style="margin-left:auto">Активен</span></div>
-                            <button class="btn btn-ghost btn-sm mt" onclick="toast('Приглашение отправлено на email')"><i class="fa-solid fa-user-plus"></i> Пригласить</button>
+                            
 
                             <div class="section-title" style="margin:22px 0 14px">Уведомления и безопасность</div>
                             <div class="list-row"><span class="small">Новый подписчик</span><div class="switch on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
                             <div class="list-row"><span class="small">Новый комментарий</span><div class="switch on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
                             <div class="list-row"><span class="small">Двухфакторная аутентификация</span><div class="switch" style="margin-left:auto" onclick="this.classList.toggle('on');toast('2FA подключена')"></div></div>
-                            <button class="btn btn-outline btn-sm mt" style="color:var(--red)" onclick="toast('Запрос на удаление аккаунта отправлен')"><i class="fa-solid fa-trash"></i> Удалить аккаунт</button>
+                            
                         </div>
                     </div>
                 </section>
@@ -389,17 +322,16 @@
                 <section class="page" id="page-help">
                     <div class="cols-2">
                         <div class="card">
-                            <div class="section-title" style="margin-bottom:16px">База знаний</div>
-                            <div class="list-row"><div class="ctype article"><i class="fa-solid fa-book"></i></div><div><b style="font-size:13.5px">Как начать зарабатывать</b><div class="small muted">Гайд для новичков · 5 мин</div></div></div>
-                            <div class="list-row"><div class="ctype video"><i class="fa-solid fa-play"></i></div><div><b style="font-size:13.5px">Настройка уровней подписки</b><div class="small muted">Видео-туториал · 8 мин</div></div></div>
-                            <div class="list-row"><div class="ctype audio"><i class="fa-solid fa-circle-question"></i></div><div><b style="font-size:13.5px">FAQ по выплатам</b><div class="small muted">Частые вопросы</div></div></div>
+                            <div class="section-title" style="margin-bottom:16px">Документация</div>
+                            <div class="list-row"><div class="ctype article"><i class="fa-solid fa-book"></i></div><div><b style="font-size:13.5px">В разработке</b><div class="small muted">Будет позже</div></div></div>
+
                         </div>
                         <div class="card">
                             <div class="section-title" style="margin-bottom:16px">Обратная связь</div>
                             <div class="field"><label>Тема</label><select><option>Идея для развития</option><option>Баг-репорт</option><option>Вопрос по выплатам</option></select></div>
                             <div class="field"><label>Сообщение</label><textarea rows="4" placeholder="Опишите вашу идею или проблему..."></textarea></div>
                             <button class="btn btn-primary" onclick="toast('Спасибо! Сообщение отправлено в поддержку')"><i class="fa-solid fa-paper-plane"></i> Отправить</button>
-                            <p class="small muted mt"><i class="fa-solid fa-bolt" style="color:var(--orange)"></i> Приоритетная поддержка для платных авторов</p>
+                            
                         </div>
                     </div>
                 </section>
@@ -409,8 +341,8 @@
     </div>
 
     <!-- AI Assistant -->
-    <button class="fab" onclick="toggleAI()"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
-    <div class="ai-panel" id="aiPanel">
+    <!--button class="fab" onclick="toggleAI()"><i class="fa-solid fa-wand-magic-sparkles"></i></button-->
+    <!--div class="ai-panel" id="aiPanel">
         <div class="ai-head">
             <div style="width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.2);display:grid;place-items:center"><i class="fa-solid fa-robot"></i></div>
             <div><b>Цифровой Менеджер</b><br><small>AI-помощник автора</small></div>
@@ -427,7 +359,7 @@
             <input id="aiInput" placeholder="Спросите что-нибудь..." onkeydown="if(event.key==='Enter')aiSend()">
             <button class="ai-send" onclick="aiSend()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
-    </div>
+    </div-->
 
     <!-- Modals -->
     <div class="modal-bg" id="modalBg">
