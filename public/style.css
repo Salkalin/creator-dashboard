@@ -1050,6 +1050,7 @@ tbody tr:hover {
     max-height: 90vh;
     overflow-y: auto;
     animation: pop .25s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .modal.wide {

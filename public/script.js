@@ -76,7 +76,7 @@ let currentTypeFilter = 'all';
 // ОБРАБОТЧИКИ ФИЛЬТРОВ СТАТУСОВ
 // ============================================
 
-document.querySelectorAll('.toolbar .chip').forEach(c => c.addEventListener('click', function() {
+document.querySelectorAll('#page-content .toolbar .chip').forEach(c => c.addEventListener('click', function() {
     const siblings = this.parentElement.querySelectorAll('.chip');
     siblings.forEach(s => s.classList.remove('active'));
     this.classList.add('active');
@@ -90,6 +90,29 @@ document.querySelectorAll('.toolbar .chip').forEach(c => c.addEventListener('cli
     
     currentFilter = statusMap[this.textContent.trim()] || 'all';
     loadContentTable();
+}));
+
+// ============================================
+// ФИЛЬТРЫ АУДИТОРИИ
+// ============================================
+
+let currentAudienceFilter = 'all';
+
+document.querySelectorAll('#page-audience .toolbar .chip').forEach(c => c.addEventListener('click', function() {
+    const siblings = this.parentElement.querySelectorAll('.chip');
+    siblings.forEach(s => s.classList.remove('active'));
+    this.classList.add('active');
+    
+    const filterMap = {
+        'Все': 'all',
+        'Базовый': 'base',
+        'Премиум': 'prem',
+        'VIP': 'vip',
+        'Спящие': 'dormant'
+    };
+    
+    currentAudienceFilter = filterMap[this.textContent.trim()] || 'all';
+    renderAudience();
 }));
 
 // ============================================
@@ -173,6 +196,15 @@ const icons = {
     // collection: 'fa-folder'  ← УДАЛЕНО
 };
 
+const typeLabels = {
+    article: 'Статья',
+    video: 'Видео',
+    audio: 'Аудио',
+    gallery: 'Галерея',
+    podcast: 'Подкаст',
+    collection: 'Коллекция'
+};
+
 function renderTopContent() {
     const el = document.getElementById('topContent');
     if (!el) return;
@@ -180,7 +212,7 @@ function renderTopContent() {
         `<div class="list-row">
             <div class="rank">${i+1}</div>
             <div class="ctype ${d.type}"><i class="fa-solid ${icons[d.type]}"></i></div>
-            <div><div class="row-title">${d.t}</div><div class="row-meta">${d.type}</div></div>
+            <div><div class="row-title">${d.t}</div><div class="row-meta">${typeLabels[d.type] || d.type}</div></div>
             <span class="row-money">${d.m}</span>
             <button class="btn btn-ghost btn-sm" onclick="goto('content')">Перейти</button>
         </div>`
@@ -479,7 +511,15 @@ const aud = [
 function renderAudience() {
     const el = document.getElementById('audienceRows');
     if (!el) return;
-    el.innerHTML = aud.map((u, i) => {
+    
+    let filtered = aud;
+    if (currentAudienceFilter === 'dormant') {
+        filtered = aud.filter(u => u.risk > 60);
+    } else if (currentAudienceFilter !== 'all') {
+        filtered = aud.filter(u => u.lvl === currentAudienceFilter);
+    }
+    
+    el.innerHTML = filtered.map((u, i) => {
         const rc = u.risk > 60 ? 'var(--red)' : u.risk > 30 ? 'var(--orange)' : 'var(--green)';
         return `<tr onclick="audCard('${u.n}','${u.ll}','${u.p}')">
             <td style="display:flex;gap:10px;align-items:center"><div class="mini-avatar" style="background:${colors[i%6]}">${u.n.split(' ').map(x=>x[0]).join('')}</div><div><b style="font-size:13px">${u.n}</b></div></td>
