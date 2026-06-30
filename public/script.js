@@ -815,6 +815,128 @@ function clearCoverFile() {
 }
 
 // ============================================
+// КАСТОМНЫЕ ПИКЕРЫ ДАТЫ/ВРЕМЕНИ
+// ============================================
+
+function padZero(n) { return String(n).padStart(2, '0'); }
+
+function renderDatePicker(prefix, defaultDate) {
+    const d = defaultDate || new Date();
+    return `
+    <div class="date-picker" id="${prefix}Picker">
+        <div class="date-inputs">
+            <input class="date-seg" id="${prefix}DD" type="text" maxlength="2" placeholder="ДД" value="${padZero(d.getDate())}" inputmode="numeric" data-next="${prefix}MM">
+            <span class="date-sep">.</span>
+            <input class="date-seg" id="${prefix}MM" type="text" maxlength="2" placeholder="ММ" value="${padZero(d.getMonth() + 1)}" inputmode="numeric" data-next="${prefix}YYYY">
+            <span class="date-sep">.</span>
+            <input class="date-seg date-seg-year" id="${prefix}YYYY" type="text" maxlength="4" placeholder="ГГГГ" value="${d.getFullYear()}" inputmode="numeric">
+        </div>
+    </div>`;
+}
+
+function renderDateTimePicker(defaultDate) {
+    const d = defaultDate || new Date();
+
+    return `
+    <div class="date-picker" id="schedulePicker">
+        <label class="field-label">Дата</label>
+        <div class="date-inputs">
+            <input class="date-seg" id="scheduleDD" type="text" maxlength="2" placeholder="ДД" value="${padZero(d.getDate())}" inputmode="numeric" data-next="scheduleMM">
+            <span class="date-sep">.</span>
+            <input class="date-seg" id="scheduleMM" type="text" maxlength="2" placeholder="ММ" value="${padZero(d.getMonth() + 1)}" inputmode="numeric" data-next="scheduleYYYY">
+            <span class="date-sep">.</span>
+            <input class="date-seg date-seg-year" id="scheduleYYYY" type="text" maxlength="4" placeholder="ГГГГ" value="${d.getFullYear()}" inputmode="numeric">
+        </div>
+        <label class="field-label" style="margin-top:14px">Время</label>
+        <div class="time-inputs">
+            <input class="time-seg" id="scheduleHH" type="text" maxlength="2" placeholder="ЧЧ" value="${padZero(d.getHours())}" inputmode="numeric" data-next="scheduleMi">
+            <span class="date-sep">:</span>
+            <input class="time-seg" id="scheduleMi" type="text" maxlength="2" placeholder="ММ" value="${padZero(Math.floor(d.getMinutes() / 15) * 15)}" inputmode="numeric">
+        </div>
+    </div>`;
+}
+
+function getDateTimePickerValue(prefix) {
+    const dd = document.getElementById(prefix + 'DD')?.value?.trim();
+    const mm = document.getElementById(prefix + 'MM')?.value?.trim();
+    const yyyy = document.getElementById(prefix + 'YYYY')?.value?.trim();
+
+    let hh = '10', mi = '00';
+    const hhEl = document.getElementById(prefix + 'HH');
+    const miEl = document.getElementById(prefix + 'Mi');
+    if (hhEl) hh = hhEl.value.trim() || '10';
+    if (miEl) mi = miEl.value.trim() || '00';
+
+    if (!dd || !mm || !yyyy) return null;
+    if (dd.length < 2 || mm.length < 2 || yyyy.length < 4) return null;
+
+    const d = parseInt(dd), m = parseInt(mm), y = parseInt(yyyy);
+    const h = parseInt(hh), n = parseInt(mi);
+    if (isNaN(d) || isNaN(m) || isNaN(y) || isNaN(h) || isNaN(n)) return null;
+    if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024) return null;
+    if (h < 0 || h > 23 || n < 0 || n > 59) return null;
+
+    const dt = new Date(y, m - 1, d, h, n);
+    if (dt.getDate() !== d || dt.getMonth() !== m - 1) return null;
+
+    return dt.toISOString();
+}
+
+document.addEventListener('click', function(e) {
+    const chip = e.target.closest('.time-chip');
+    if (chip) {
+        const container = chip.closest('.time-chips');
+        container.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+    }
+});
+
+document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('date-seg') || e.target.classList.contains('time-seg')) {
+        const seg = e.target;
+        const val = seg.value.replace(/\D/g, '');
+        seg.value = val;
+        const maxLen = parseInt(seg.getAttribute('maxlength'));
+        if (val.length >= maxLen && seg.dataset.next) {
+            const next = document.getElementById(seg.dataset.next);
+            if (next) next.focus();
+        }
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.target.classList.contains('date-seg') || e.target.classList.contains('time-seg')) {
+        if (e.key === 'Backspace' && e.target.value === '' && e.target.dataset.prev) {
+            const prev = document.getElementById(e.target.dataset.prev);
+            if (prev) { prev.focus(); prev.select(); }
+        }
+        if (e.key === '.' || e.key === '-' || e.key === ':') {
+            e.preventDefault();
+            if (e.target.dataset.next) {
+                const next = document.getElementById(e.target.dataset.next);
+                if (next) next.focus();
+            }
+        }
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.target.classList.contains('date-seg')) {
+        if (e.key === 'Backspace' && e.target.value === '' && e.target.dataset.prev) {
+            const prev = document.getElementById(e.target.dataset.prev);
+            if (prev) { prev.focus(); prev.select(); }
+        }
+        if (e.key === '.' || e.key === '-') {
+            e.preventDefault();
+            if (e.target.dataset.next) {
+                const next = document.getElementById(e.target.dataset.next);
+                if (next) next.focus();
+            }
+        }
+    }
+});
+
+// ============================================
 // СОЗДАНИЕ КОНТЕНТА
 // ============================================
 
@@ -947,30 +1069,26 @@ function openCreateForm(type) {
             </div>
             <div class="field">
                 <label>Доступ</label>
-                <div class="radio-group">
-                    <div class="radio-opt sel" onclick="selRadio(this)" data-value="free">
+                <div class="radio-group" role="radiogroup">
+                    <div class="radio-opt sel" tabindex="0" role="radio" aria-checked="true" data-value="free">
                         <i class="fa-solid fa-globe"></i>
                         <div><b>Бесплатно</b><p>Для всех</p></div>
                     </div>
-                    <div class="radio-opt" onclick="selRadio(this)" data-value="subscription">
+                    <div class="radio-opt" tabindex="0" role="radio" aria-checked="false" data-value="subscription">
                         <i class="fa-solid fa-crown"></i>
                         <div><b>По подписке</b><p>Для подписчиков</p></div>
                     </div>
-                    <div class="radio-opt" onclick="selRadio(this)" data-value="paid">
+                    <div class="radio-opt" tabindex="0" role="radio" aria-checked="false" data-value="paid">
                         <i class="fa-solid fa-ruble-sign"></i>
                         <div><b>Разовая покупка</b><p>Указать цену</p></div>
                     </div>
                 </div>
             </div>
-            <div class="field">
-                <label>Дата публикации</label>
-                <input id="contentScheduled" type="datetime-local">
-            </div>
         </form>
     `,
     `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button>
      <button class="btn btn-outline" onclick="saveContent('draft')"><i class="fa-solid fa-pen"></i> Черновик</button>
-     <button class="btn btn-outline" onclick="saveContent('scheduled')"><i class="fa-solid fa-calendar"></i> Запланировать</button>
+     <button class="btn btn-outline" onclick="openSchedulePicker()"><i class="fa-solid fa-calendar"></i> Запланировать</button>
      <button class="btn btn-primary" onclick="saveContent('published')"><i class="fa-solid fa-paper-plane"></i> Опубликовать</button>`
     );
 }
@@ -978,31 +1096,123 @@ function openCreateForm(type) {
 function selRadio(el) {
     const parent = el.parentElement;
     if (parent) {
-        parent.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('sel'));
+        parent.querySelectorAll('.radio-opt').forEach(o => {
+            o.classList.remove('sel');
+            o.setAttribute('aria-checked', 'false');
+        });
     }
     el.classList.add('sel');
+    el.setAttribute('aria-checked', 'true');
 }
+
+document.addEventListener('click', function(e) {
+    const radio = e.target.closest('.radio-opt');
+    if (radio) selRadio(radio);
+});
+
+document.addEventListener('keydown', function(e) {
+    const radio = e.target.closest('.radio-opt');
+    if (radio && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        selRadio(radio);
+    }
+});
 
 // ============================================
 // СОХРАНЕНИЕ КОНТЕНТА
 // ============================================
 
+let pendingScheduledDate = null;
+let snapshotForm = null;
+
+function snapshotContentForm() {
+    const selectedRadio = document.querySelector('.radio-opt.sel');
+    return {
+        title: document.getElementById('contentTitle')?.value?.trim() || '',
+        description: document.getElementById('contentDescription')?.value?.trim() || '',
+        tags: document.getElementById('contentTags')?.value?.trim() || '',
+        price: parseInt(document.getElementById('contentPrice')?.value) || 0,
+        access: selectedRadio ? selectedRadio.dataset.value : 'free',
+        type: document.querySelector('.modal-head h3')?.textContent?.replace('Создать: ', '') || ''
+    };
+}
+
+function openSchedulePicker() {
+    const form = snapshotContentForm();
+    if (!form.title) {
+        toast('❌ Сначала введите заголовок!');
+        return;
+    }
+
+    snapshotForm = form;
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(10, 0, 0, 0);
+
+    openModal('Запланировать публикацию', `
+        <p class="small muted" style="margin-bottom:16px">Выберите дату и время публикации</p>
+        ${renderDateTimePicker(tomorrow)}
+    `,
+    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button>
+     <button class="btn btn-primary" onclick="confirmSchedule()"><i class="fa-solid fa-calendar-check"></i> Запланировать</button>`);
+}
+
+function confirmSchedule() {
+    const val = getDateTimePickerValue('schedule');
+    if (!val) {
+        toast('❌ Заполните дату и время!');
+        return;
+    }
+    if (new Date(val) <= new Date()) {
+        toast('❌ Дата должна быть в будущем!');
+        return;
+    }
+    pendingScheduledDate = val;
+    closeModal();
+    saveContent('scheduled');
+}
+
 async function saveContent(status) {
     try {
-        const title = document.getElementById('contentTitle')?.value?.trim();
-        const description = document.getElementById('contentDescription')?.value?.trim();
-        const tags = document.getElementById('contentTags')?.value?.trim();
-        const price = parseInt(document.getElementById('contentPrice')?.value) || 0;
-        const scheduledFor = document.getElementById('contentScheduled')?.value;
-        const selectedRadio = document.querySelector('.radio-opt.sel');
-        const access = selectedRadio ? selectedRadio.dataset.value : 'free';
+        const data = snapshotForm || {};
+        snapshotForm = null;
+
+        const title = data.title || document.getElementById('contentTitle')?.value?.trim() || '';
+        const description = data.description || document.getElementById('contentDescription')?.value?.trim() || '';
+        const tags = data.tags || document.getElementById('contentTags')?.value?.trim() || '';
+        const price = data.price || parseInt(document.getElementById('contentPrice')?.value) || 0;
+        const access = data.access || (() => {
+            const r = document.querySelector('.radio-opt.sel');
+            return r ? r.dataset.value : 'free';
+        })();
+        const scheduledFor = status === 'scheduled' ? pendingScheduledDate : null;
         
         if (!title) {
             toast('❌ Введите заголовок!');
             return;
         }
         
-        const modalTitle = document.querySelector('.modal-head h3')?.textContent || '';
+        if (description && description.length > 500) {
+            toast('❌ Описание не должно превышать 500 символов! (' + description.length + '/500)');
+            return;
+        }
+
+        if (access === 'paid' && price <= 0) {
+            toast('❌ Укажите цену для платного контента!');
+            return;
+        }
+
+        if (status === 'scheduled' && !scheduledFor) {
+            toast('❌ Укажите дату публикации!');
+            return;
+        }
+
+        if (scheduledFor && new Date(scheduledFor) <= new Date()) {
+            toast('❌ Дата публикации должна быть в будущем!');
+            return;
+        }
+        
         const typeMap = {
             'Статья': 'article',
             'Видео': 'video',
@@ -1011,7 +1221,7 @@ async function saveContent(status) {
             'Подкаст': 'podcast',
             'Коллекция': 'collection'
         };
-        const contentType = typeMap[modalTitle.replace('Создать: ', '')] || 'article';
+        const contentType = typeMap[data.type] || 'article';
         
         let videoData = null;
         let imagesData = [];
@@ -1140,6 +1350,7 @@ async function saveContent(status) {
             selectedVideoFile = null;
             selectedImages = [];
             selectedCover = null;
+            pendingScheduledDate = null;
             
             await loadContentTable();
             renderTopContent();
@@ -1158,41 +1369,137 @@ async function saveContent(status) {
 
 function openTier(name) {
     openModal(name ? 'Редактировать уровень' : 'Новый уровень подписки', `
-        <div class="field"><label>Название</label><input value="${name || ''}" placeholder="Например, Премиум"></div>
+        <div class="field"><label>Название <span style="color:var(--red)">*</span></label><input id="tierName" value="${name || ''}" placeholder="Например, Премиум"></div>
         <div class="cols-2">
-            <div class="field"><label>Цена / месяц (₽)</label><input type="number" value="${name ? '499' : ''}"></div>
-            <div class="field"><label>Пробный период (дней)</label><input type="number" placeholder="7"></div>
+            <div class="field"><label>Цена / месяц (₽) <span style="color:var(--red)">*</span></label><input id="tierPriceMonth" type="number" value="${name ? '499' : ''}" min="0"></div>
+            <div class="field"><label>Цена / год (₽)</label><input id="tierPriceYear" type="number" placeholder="0" min="0"></div>
         </div>
-        <div class="field"><label>Описание (что получит подписчик)</label><textarea rows="2" placeholder="Доступ к закрытым гайдам, чату и подкастам"></textarea></div>
-        <div class="field"><label>Доступные категории контента</label><input placeholder="Все теги / коллекции"></div>
+        <div class="field"><label>Описание</label><textarea id="tierDescription" rows="2" placeholder="Доступ к закрытым гайдам, чату и подкастам"></textarea></div>
+        <div class="field"><label>Преимущества (через запятую)</label><input id="tierBenefits" placeholder="Видео-уроки, закрытый чат"></div>
     `,
-    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="closeModal();toast('Уровень подписки сохранён')">Сохранить</button>`);
+    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="saveTier()">Сохранить</button>`);
+}
+
+function saveTier() {
+    const name = document.getElementById('tierName')?.value?.trim();
+    const priceMonth = parseInt(document.getElementById('tierPriceMonth')?.value);
+
+    if (!name) {
+        toast('❌ Введите название уровня!');
+        return;
+    }
+    if (!priceMonth || priceMonth < 0) {
+        toast('❌ Укажите корректную цену за месяц!');
+        return;
+    }
+
+    closeModal();
+    toast('✅ Уровень подписки «' + name + '» сохранён');
 }
 
 function openPromo() {
     openModal('Создать промокод', `
         <div class="cols-2">
-            <div class="field"><label>Код</label><input placeholder="SUMMER30"></div>
-            <div class="field"><label>Тип скидки</label><select><option>Процент (%)</option><option>Фиксированная (₽)</option></select></div>
+            <div class="field"><label>Код <span style="color:var(--red)">*</span></label><input id="promoCode" placeholder="SUMMER30"></div>
+            <div class="field"><label>Тип скидки</label><select id="promoType"><option value="percentage">Процент (%)</option><option value="fixed">Фиксированная (₽)</option></select></div>
         </div>
         <div class="cols-2">
-            <div class="field"><label>Размер скидки</label><input type="number" placeholder="30"></div>
-            <div class="field"><label>Лимит использований</label><input type="number" placeholder="100"></div>
+            <div class="field"><label>Размер скидки <span style="color:var(--red)">*</span></label><input id="promoValue" type="number" placeholder="30" min="1"></div>
+            <div class="field"><label>Лимит использований</label><input id="promoLimit" type="number" placeholder="100" min="1" value="100"></div>
         </div>
-        <div class="field"><label>Срок действия до</label><input type="date"></div>
+        <div class="field"><label>Срок действия до <span style="color:var(--red)">*</span></label>${renderDatePicker('promo')}</div>
     `,
-    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="closeModal();toast('Промокод создан')">Создать</button>`);
+    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="savePromo()">Создать</button>`);
+}
+
+function savePromo() {
+    const code = document.getElementById('promoCode')?.value?.trim();
+    const value = parseInt(document.getElementById('promoValue')?.value);
+    const date = getDateTimePickerValue('promo');
+
+    if (!code) {
+        toast('❌ Введите код промокода!');
+        return;
+    }
+    if (!value || value <= 0) {
+        toast('❌ Укажите размер скидки!');
+        return;
+    }
+    if (!date) {
+        toast('❌ Укажите срок действия!');
+        return;
+    }
+    if (new Date(date) <= new Date()) {
+        toast('❌ Срок действия должен быть в будущем!');
+        return;
+    }
+
+    closeModal();
+    toast('✅ Промокод ' + code.toUpperCase() + ' создан');
 }
 
 function openWithdraw() {
     openModal('Вывод средств', `
         <div class="card" style="background:var(--orange-soft);border:none;margin-bottom:16px"><div class="small muted">Доступно к выводу</div><div class="balance-big" style="color:var(--orange-dark)">42 891 ₽</div></div>
-        <div class="field"><label>Сумма (мин. 500 ₽)</label><input type="number" value="42891"></div>
-        <div class="field"><label>Способ вывода</label><select><option>Карта •••• 4821</option><option>Банковский счёт</option></select></div>
-        <div class="list-row"><span class="small">Автовывод при достижении 1 000 ₽ каждый день</span><div class="switch" style="margin-left:auto" onclick="this.classList.toggle('on');toast('Мгновенные мини-выплаты настроены')"></div></div>
+        <div class="field"><label>Сумма (мин. 500 ₽) <span style="color:var(--red)">*</span></label><input id="withdrawAmount" type="number" value="42891" min="500"></div>
+        <div class="field"><label>Способ вывода</label><select id="withdrawMethod"><option>Карта •••• 4821</option><option>Банковский счёт</option></select></div>
+        <div class="list-row"><span class="small">Автовывод при достижении 1 000 ₽ каждый день</span><div class="switch" tabindex="0" role="switch" aria-checked="false" style="margin-left:auto" onclick="toggleSwitch(this);toast('Мгновенные мини-выплаты настроены')"></div></div>
     `,
-    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="closeModal();toast('Заявка на вывод принята · статус: обработка')">Вывести деньги</button>`);
+    `<button class="btn btn-ghost" onclick="closeModal()">Отмена</button><button class="btn btn-primary" onclick="saveWithdraw()">Вывести деньги</button>`);
 }
+
+function saveWithdraw() {
+    const amount = parseInt(document.getElementById('withdrawAmount')?.value);
+    const available = 42891;
+
+    if (!amount || amount < 500) {
+        toast('❌ Минимальная сумма вывода — 500 ₽');
+        return;
+    }
+    if (amount > available) {
+        toast('❌ Недостаточно средств. Доступно: ' + available + ' ₽');
+        return;
+    }
+
+    closeModal();
+    toast('✅ Заявка на вывод ' + amount.toLocaleString('ru') + ' ₽ принята · статус: обработка');
+}
+
+// ============================================
+// НАСТРОЙки
+// ============================================
+
+function saveSettings() {
+    const nameInput = document.querySelector('#page-settings input[value="Иван Соколов"]');
+    if (nameInput && !nameInput.value.trim()) {
+        toast('❌ Имя не может быть пустым!');
+        return;
+    }
+    toast('✅ Профиль сохранён');
+}
+
+function sendFeedback() {
+    const textarea = document.querySelector('#page-help textarea');
+    if (textarea && !textarea.value.trim()) {
+        toast('❌ Введите сообщение!');
+        return;
+    }
+    toast('✅ Спасибо! Сообщение отправлено в поддержку');
+    textarea.value = '';
+}
+
+function toggleSwitch(el) {
+    el.classList.toggle('on');
+    el.setAttribute('aria-checked', el.classList.contains('on'));
+}
+
+document.addEventListener('keydown', function(e) {
+    const sw = e.target.closest('.switch');
+    if (sw && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        sw.click();
+    }
+});
 
 // ============================================
 // TOAST

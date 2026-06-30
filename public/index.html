@@ -319,15 +319,15 @@
                             <div class="field"><label>Имя / бренд</label><input value="Иван Соколов"></div>
                             <div class="field"><label>Краткое описание</label><textarea rows="2">Учу дизайну и анимации в Figma. Подкасты и гайды каждую неделю.</textarea></div>
                             <div class="field"><label>Социальные ссылки</label><input placeholder="Telegram, YouTube, VK..."></div>
-                            <button class="btn btn-primary" onclick="toast('Профиль сохранён')"><i class="fa-solid fa-check"></i> Сохранить</button>
+                            <button class="btn btn-primary" onclick="saveSettings()"><i class="fa-solid fa-check"></i> Сохранить</button>
                         </div>
                         <div class="card">
                             
 
                             <div class="section-title" style="margin:22px 0 14px">Уведомления и безопасность</div>
-                            <div class="list-row"><span class="small">Новый подписчик</span><div class="switch on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
-                            <div class="list-row"><span class="small">Новый комментарий</span><div class="switch on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
-                            <div class="list-row"><span class="small">Двухфакторная аутентификация</span><div class="switch" style="margin-left:auto" onclick="this.classList.toggle('on');toast('2FA подключена')"></div></div>
+                            <div class="list-row"><span class="small">Новый подписчик</span><div class="switch on" tabindex="0" role="switch" aria-checked="true" style="margin-left:auto" onclick="toggleSwitch(this)"></div></div>
+                            <div class="list-row"><span class="small">Новый комментарий</span><div class="switch on" tabindex="0" role="switch" aria-checked="true" style="margin-left:auto" onclick="toggleSwitch(this)"></div></div>
+                            <div class="list-row"><span class="small">Двухфакторная аутентификация</span><div class="switch" tabindex="0" role="switch" aria-checked="false" style="margin-left:auto" onclick="toggleSwitch(this);toast('2FA подключена')"></div></div>
                             
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                             <div class="section-title" style="margin-bottom:16px">Обратная связь</div>
                             <div class="field"><label>Тема</label><select><option>Идея для развития</option><option>Баг-репорт</option><option>Вопрос по выплатам</option></select></div>
                             <div class="field"><label>Сообщение</label><textarea rows="4" placeholder="Опишите вашу идею или проблему..."></textarea></div>
-                            <button class="btn btn-primary" onclick="toast('Спасибо! Сообщение отправлено в поддержку')"><i class="fa-solid fa-paper-plane"></i> Отправить</button>
+                            <button class="btn btn-primary" onclick="sendFeedback()"><i class="fa-solid fa-paper-plane"></i> Отправить</button>
                             
                         </div>
                     </div>

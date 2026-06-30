@@ -944,6 +944,11 @@ tbody tr:hover {
     flex: none;
 }
 
+.switch:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
+
 .switch.on {
     background: var(--orange);
 }
@@ -1031,6 +1036,11 @@ tbody tr:hover {
     display: flex;
     gap: 10px;
     align-items: flex-start;
+}
+
+.radio-opt:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
 }
 
 .radio-opt.sel {
@@ -1222,6 +1232,138 @@ tbody tr:hover {
     color: var(--muted);
     padding: 40px;
     font-size: 14px;
+}
+
+/* Date/Time Picker */
+.date-picker {
+    margin-bottom: 4px;
+}
+
+.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ink);
+}
+
+.date-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.date-seg {
+    width: 52px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--card);
+    outline: none;
+    transition: .18s;
+    padding: 0;
+    letter-spacing: .5px;
+}
+
+.date-seg:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px var(--orange-soft);
+}
+
+.date-seg::placeholder {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.date-seg-year {
+    width: 72px;
+}
+
+.date-sep {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 0 4px;
+    user-select: none;
+}
+
+.date-seg-year {
+    width: 72px;
+}
+
+.time-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.time-seg {
+    width: 60px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--card);
+    outline: none;
+    transition: .18s;
+    padding: 0;
+    letter-spacing: .5px;
+}
+
+.time-seg:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px var(--orange-soft);
+}
+
+.time-seg::placeholder {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.time-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.time-chip {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: .18s;
+}
+
+.time-chip:hover {
+    border-color: var(--orange);
+    color: var(--ink);
+}
+
+.time-chip.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+}
+
+.time-chip:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
 }
 
 .sidebar-overlay {
@@ -1463,6 +1605,27 @@ tbody tr:hover {
     }
     .page-title {
         font-size: 15px;
+    }
+    .date-seg {
+        width: 44px;
+        height: 40px;
+        font-size: 14px;
+    }
+    .date-seg-year {
+        width: 60px;
+    }
+    .date-sep {
+        font-size: 16px;
+        padding: 0 2px;
+    }
+    .time-chip {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    .time-seg {
+        width: 50px;
+        height: 40px;
+        font-size: 16px;
     }
     .grid-4 {
         gap: 10px;
