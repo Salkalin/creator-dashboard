@@ -32,19 +32,19 @@
                     <div class="brand-sub">Кабинет автора</div>
                 </div>
             </div>
-            <nav class="nav" id="nav">
+            <nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
                 <div class="nav-group-title">Обзор</div>
-                <div class="nav-item active" data-page="dashboard"><i class="fa-solid fa-chart-line"></i> Главная</div>
-                <div class="nav-item" data-page="content"><i class="fa-solid fa-layer-group"></i> Контент</div>
-                <div class="nav-item" data-page="monetization"><i class="fa-solid fa-crown"></i> Монетизация</div>
+                <button class="nav-item active" data-page="dashboard" aria-current="page"><i class="fa-solid fa-chart-line"></i> Главная</button>
+                <button class="nav-item" data-page="content"><i class="fa-solid fa-layer-group"></i> Контент</button>
+                <button class="nav-item" data-page="monetization"><i class="fa-solid fa-crown"></i> Монетизация</button>
                 <div class="nav-group-title">Рост</div>
-                <div class="nav-item" data-page="audience"><i class="fa-solid fa-users"></i> Аудитория</div>
-                <!-- <div class="nav-item" data-page="comms"><i class="fa-solid fa-comments"></i> Коммуникации <span class="nav-badge">4</span></div> -->  <!-- УДАЛЕНО -->
-                <div class="nav-item" data-page="analytics"><i class="fa-solid fa-chart-pie"></i> Аналитика</div>
+                <button class="nav-item" data-page="audience"><i class="fa-solid fa-users"></i> Аудитория</button>
+                <!-- <button class="nav-item" data-page="comms"><i class="fa-solid fa-comments"></i> Коммуникации <span class="nav-badge">4</span></button> -->  <!-- УДАЛЕНО -->
+                <button class="nav-item" data-page="analytics"><i class="fa-solid fa-chart-pie"></i> Аналитика</button>
                 <div class="nav-group-title">Бизнес</div>
-                <div class="nav-item" data-page="finance"><i class="fa-solid fa-wallet"></i> Финансы</div>
-                <div class="nav-item" data-page="settings"><i class="fa-solid fa-gear"></i> Настройки</div>
-                <div class="nav-item" data-page="help"><i class="fa-solid fa-circle-question"></i> Справка</div>
+                <button class="nav-item" data-page="finance"><i class="fa-solid fa-wallet"></i> Финансы</button>
+                <button class="nav-item" data-page="settings"><i class="fa-solid fa-gear"></i> Настройки</button>
+                <button class="nav-item" data-page="help"><i class="fa-solid fa-circle-question"></i> Справка</button>
             </nav>
             <div class="sidebar-foot">
                 <button class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeText">Тёмная тема</span></button>
@@ -54,7 +54,7 @@
         <!-- Main -->
         <div class="main">
             <header class="topbar">
-                <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button class="hamburger" onclick="toggleSidebar()" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"><i class="fa-solid fa-bars"></i></button>
                 <div class="page-title" id="pageTitle">Главная</div>
                 <!--div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -103,10 +103,10 @@
                             <div class="section-head">
                                 <div class="section-title">Выручка за 30 дней</div>
                                 <div class="chart-tabs" id="chartTabs">
-                                    <div class="chart-tab active">Дни</div>
-                                    <div class="chart-tab">Недели</div>
-                                    <div class="chart-tab">Месяцы</div>
-                                    <div class="chart-tab">Кварталы</div>
+                                    <div class="chart-tab active" tabindex="0" role="button">Дни</div>
+                                    <div class="chart-tab" tabindex="0" role="button">Недели</div>
+                                    <div class="chart-tab" tabindex="0" role="button">Месяцы</div>
+                                    <div class="chart-tab" tabindex="0" role="button">Кварталы</div>
                                 </div>
                             </div>
                             <div class="chart-scroll"><div class="bars" id="bars"></div></div>
@@ -144,11 +144,11 @@
                 <section class="page" id="page-content">
                     <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">
                         <div class="tabs" id="contentTabs">
-                            <div class="tab active">Все</div>
-                            <div class="tab">Статьи</div>
-                            <div class="tab">Видео</div>
-                            <div class="tab">Аудио</div>
-                            <div class="tab">Галерея</div>
+                            <div class="tab active" tabindex="0" role="button">Все</div>
+                            <div class="tab" tabindex="0" role="button">Статьи</div>
+                            <div class="tab" tabindex="0" role="button">Видео</div>
+                            <div class="tab" tabindex="0" role="button">Аудио</div>
+                            <div class="tab" tabindex="0" role="button">Галерея</div>
                             <!-- <div class="tab">Подкасты</div> -->  <!-- УДАЛЕНО -->
                             <!-- <div class="tab">Коллекции</div> -->  <!-- УДАЛЕНО -->
                         </div>
@@ -156,10 +156,10 @@
                     </div>
                     <div class="card" style="padding:16px">
                         <div class="toolbar" style="margin-bottom:16px">
-                            <div class="chip active">Все типы</div>
-                            <div class="chip">Опубликован</div>
-                            <div class="chip">Черновик</div>
-                            <div class="chip">Запланирован</div>
+                            <div class="chip active" tabindex="0" role="button">Все типы</div>
+                            <div class="chip" tabindex="0" role="button">Опубликован</div>
+                            <div class="chip" tabindex="0" role="button">Черновик</div>
+                            <div class="chip" tabindex="0" role="button">Запланирован</div>
                             <div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по заголовку"></div>
                         </div>
                         <div class="table-scroll">
@@ -221,11 +221,11 @@
                     </div>
                     <div class="card mt" style="padding:16px">
                         <div class="toolbar" style="margin-bottom:16px">
-                            <div class="chip active">Все</div>
-                            <div class="chip">Базовый</div>
-                            <div class="chip">Премиум</div>
-                            <div class="chip">VIP</div>
-                            <div class="chip">Спящие</div>
+                            <div class="chip active" tabindex="0" role="button">Все</div>
+                            <div class="chip" tabindex="0" role="button">Базовый</div>
+                            <div class="chip" tabindex="0" role="button">Премиум</div>
+                            <div class="chip" tabindex="0" role="button">VIP</div>
+                            <div class="chip" tabindex="0" role="button">Спящие</div>
                             <!--div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по имени или email"></div-->
                         </div>
                         <div class="table-scroll">

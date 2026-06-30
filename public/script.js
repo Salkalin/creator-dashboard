@@ -5,8 +5,10 @@
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
-    if (sidebar) sidebar.classList.toggle('open');
+    const hamburger = document.querySelector('.hamburger');
+    const isOpen = sidebar.classList.toggle('open');
     if (overlay) overlay.classList.toggle('show');
+    if (hamburger) hamburger.setAttribute('aria-expanded', isOpen);
 }
 
 function closeSidebar() {
@@ -15,6 +17,13 @@ function closeSidebar() {
     if (sidebar) sidebar.classList.remove('open');
     if (overlay) overlay.classList.remove('show');
 }
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeSidebar();
+        closeModal();
+    }
+});
 
 // ============================================
 // НАВИГАЦИЯ
@@ -37,7 +46,15 @@ function goto(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const targetPage = document.getElementById('page-' + page);
     if (targetPage) targetPage.classList.add('active');
-    document.querySelectorAll('#nav .nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === page));
+    document.querySelectorAll('#nav .nav-item').forEach(n => {
+        const isActive = n.dataset.page === page;
+        n.classList.toggle('active', isActive);
+        if (isActive) {
+            n.setAttribute('aria-current', 'page');
+        } else {
+            n.removeAttribute('aria-current');
+        }
+    });
     document.getElementById('pageTitle').textContent = titles[page] || page;
     window.scrollTo(0, 0);
     
@@ -54,14 +71,33 @@ document.querySelectorAll('#nav .nav-item').forEach(n => n.addEventListener('cli
 
 function bindTabs(id, cb) {
     const tabs = document.querySelectorAll('#' + id + ' .tab, #' + id + ' .chart-tab');
-    tabs.forEach(t => t.addEventListener('click', () => {
-        tabs.forEach(x => x.classList.remove('active'));
-        t.classList.add('active');
-        if (cb) cb(t.textContent);
-    }));
+    tabs.forEach(t => {
+        t.addEventListener('click', () => {
+            tabs.forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+            if (cb) cb(t.textContent);
+        });
+        t.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                t.click();
+            }
+        });
+    });
 }
 
-bindTabs('contentTabs');
+const contentTypeMap = {
+    'Все': 'all',
+    'Статьи': 'article',
+    'Видео': 'video',
+    'Аудио': 'audio',
+    'Галерея': 'gallery'
+};
+
+bindTabs('contentTabs', function(text) {
+    currentTypeFilter = contentTypeMap[text.trim()] || 'all';
+    loadContentTable();
+});
 bindTabs('chartTabs', renderBars);
 
 
@@ -72,11 +108,23 @@ bindTabs('chartTabs', renderBars);
 let currentFilter = 'all';
 let currentTypeFilter = 'all';
 
+function bindChips(selector, cb) {
+    document.querySelectorAll(selector).forEach(c => {
+        c.addEventListener('click', function() { cb.call(this); });
+        c.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+}
+
 // ============================================
 // ОБРАБОТЧИКИ ФИЛЬТРОВ СТАТУСОВ
 // ============================================
 
-document.querySelectorAll('#page-content .toolbar .chip').forEach(c => c.addEventListener('click', function() {
+bindChips('#page-content .toolbar .chip', function() {
     const siblings = this.parentElement.querySelectorAll('.chip');
     siblings.forEach(s => s.classList.remove('active'));
     this.classList.add('active');
@@ -90,7 +138,7 @@ document.querySelectorAll('#page-content .toolbar .chip').forEach(c => c.addEven
     
     currentFilter = statusMap[this.textContent.trim()] || 'all';
     loadContentTable();
-}));
+});
 
 // ============================================
 // ФИЛЬТРЫ АУДИТОРИИ
@@ -98,7 +146,7 @@ document.querySelectorAll('#page-content .toolbar .chip').forEach(c => c.addEven
 
 let currentAudienceFilter = 'all';
 
-document.querySelectorAll('#page-audience .toolbar .chip').forEach(c => c.addEventListener('click', function() {
+bindChips('#page-audience .toolbar .chip', function() {
     const siblings = this.parentElement.querySelectorAll('.chip');
     siblings.forEach(s => s.classList.remove('active'));
     this.classList.add('active');
@@ -113,33 +161,11 @@ document.querySelectorAll('#page-audience .toolbar .chip').forEach(c => c.addEve
     
     currentAudienceFilter = filterMap[this.textContent.trim()] || 'all';
     renderAudience();
-}));
+});
 
 // ============================================
 // ОБРАБОТЧИКИ ФИЛЬТРОВ ТИПОВ
 // ============================================
-
-document.querySelectorAll('#contentTabs .tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        const siblings = this.parentElement.querySelectorAll('.tab');
-        siblings.forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
-        
-        const typeMap = {
-            'Все': 'all',
-            'Статьи': 'article',
-            'Видео': 'video',
-            'Аудио': 'audio',
-            'Галерея': 'gallery',
-            // 'Подкасты': 'podcast'  ← УДАЛЕНО
-            // 'Коллекции': 'collection'  ← УДАЛЕНО
-        };
-        
-        const type = this.textContent.trim();
-        currentTypeFilter = typeMap[type] || 'all';
-        loadContentTable();
-    });
-});
 
 // ============================================
 // ГРАФИКИ
