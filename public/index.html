@@ -20,10 +20,13 @@
 </head>
 <body>
     <div class="app">
+        <!-- Sidebar overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="brand">
-                <div class="brand-logo"><i class="fa-solid fa-feather"></i></div>
+                <img src="/uploads/images/file-001.png" alt="SubMart" class="brand-logo-img">
                 <div>
                     <div class="brand-name">SubMart</div>
                     <div class="brand-sub">Кабинет автора</div>
@@ -51,6 +54,7 @@
         <!-- Main -->
         <div class="main">
             <header class="topbar">
+                <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
                 <div class="page-title" id="pageTitle">Главная</div>
                 <!--div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -62,6 +66,7 @@
                     <div class="top-stat"><div class="num">132</div><div class="lbl">клиентов</div></div>
                     <button class="icon-btn" onclick="toast('Уведомления: 3 новых подписчика')"><i class="fa-solid fa-bell"></i><span class="dot"></span></button>
                     <div class="avatar" onclick="goto('settings')">ИС</div>
+                    <button class="theme-toggle-mobile" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="themeIconMobile"></i></button>
                 </div>
             </header>
 
@@ -104,7 +109,7 @@
                                     <div class="chart-tab">Кварталы</div>
                                 </div>
                             </div>
-                            <div class="bars" id="bars"></div>
+                            <div class="chart-scroll"><div class="bars" id="bars"></div></div>
                             <div style="margin-top:16px"><button class="btn btn-ghost btn-sm" onclick="toast('График экспортирован в PNG')"><i class="fa-solid fa-download"></i> Экспорт</button></div>
                         </div>
                     </div>
@@ -137,7 +142,7 @@
 
                 <!-- CONTENT -->
                 <section class="page" id="page-content">
-                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">
                         <div class="tabs" id="contentTabs">
                             <div class="tab active">Все</div>
                             <div class="tab">Статьи</div>
@@ -157,10 +162,12 @@
                             <div class="chip">Запланирован</div>
                             <div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по заголовку"></div>
                         </div>
-                        <table>
-                            <thead><tr><th>Материал</th><th>Тип</th><th>Просмотры</th><th>Реакции</th><th>Доход</th><th>Статус</th><th></th></tr></thead>
-                            <tbody id="contentRows"></tbody>
-                        </table>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Материал</th><th>Тип</th><th>Просмотры</th><th>Реакции</th><th>Доход</th><th>Статус</th><th></th></tr></thead>
+                                <tbody id="contentRows"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
@@ -171,23 +178,27 @@
                             <div class="section-title">Уровни подписки</div>
                             <button class="btn btn-primary btn-sm" onclick="openTier()"><i class="fa-solid fa-plus"></i> Новый уровень</button>
                         </div>
-                        <table>
-                            <thead><tr><th>Уровень</th><th>Цена/мес</th><th>Цена/год</th><th>Подписчиков</th><th>Выручка</th><th></th></tr></thead>
-                            <tbody id="tierRows"></tbody>
-                        </table>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Уровень</th><th>Цена/мес</th><th>Цена/год</th><th>Подписчиков</th><th>Выручка</th><th></th></tr></thead>
+                                <tbody id="tierRows"></tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="grid-2 mt">
                         <div class="card">
                             <div class="section-head"><div class="section-title">Промокоды</div><button class="btn btn-ghost btn-sm" onclick="openPromo()"><i class="fa-solid fa-plus"></i> Создать</button></div>
-                            <table>
-                                <thead><tr><th>Код</th><th>Скидка</th><th>Активаций</th><th>Доход</th></tr></thead>
-                                <tbody>
-                                    <tr><td><b>SUMMER30</b></td><td>-30%</td><td>48</td><td class="row-money">16 700 ₽</td></tr>
-                                    <tr><td><b>WELCOME</b></td><td>-100 ₽</td><td>112</td><td class="row-money">38 200 ₽</td></tr>
-                                    <tr><td><b>VIP2026</b></td><td>-15%</td><td>9</td><td class="row-money">11 300 ₽</td></tr>
-                                </tbody>
-                            </table>
+                            <div class="table-scroll">
+                                <table>
+                                    <thead><tr><th>Код</th><th>Скидка</th><th>Активаций</th><th>Доход</th></tr></thead>
+                                    <tbody>
+                                        <tr><td><b>SUMMER30</b></td><td>-30%</td><td>48</td><td class="row-money">16 700 ₽</td></tr>
+                                        <tr><td><b>WELCOME</b></td><td>-100 ₽</td><td>112</td><td class="row-money">38 200 ₽</td></tr>
+                                        <tr><td><b>VIP2026</b></td><td>-15%</td><td>9</td><td class="row-money">11 300 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!--div class="card forecast">
                             <div class="lbl"><i class="fa-solid fa-wand-magic-sparkles"></i> Динамическое ценообразование</div>
@@ -217,10 +228,12 @@
                             <div class="chip">Спящие</div>
                             <!--div class="search-box" style="display:flex;width:auto;margin-left:auto"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Поиск по имени или email"></div-->
                         </div>
-                        <table>
-                            <thead><tr><th>Подписчик</th><th>Уровень</th><th>С нами</th><th>Заплатил</th><th>Активность</th><th>Риск оттока</th><th></th></tr></thead>
-                            <tbody id="audienceRows"></tbody>
-                        </table>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Подписчик</th><th>Уровень</th><th>С нами</th><th>Заплатил</th><th>Активность</th><th>Риск оттока</th><th></th></tr></thead>
+                                <tbody id="audienceRows"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
@@ -249,7 +262,7 @@
 
                 <!-- FINANCE -->
                 <section class="page" id="page-finance">
-                    <div class="grid-4" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="grid-4 finance-grid">
                         <div class="card">
                             <div class="lbl muted small">Доступно к выводу</div>
                             <div class="balance-big" style="color:var(--green)">42 891 ₽</div>
@@ -270,15 +283,17 @@
                     <div class="grid-2 mt">
                         <div class="card">
                             <div class="section-head"><div class="section-title">История транзакций</div><button class="btn btn-ghost btn-sm" onclick="toast('История экспортирована в CSV')"><i class="fa-solid fa-download"></i> CSV</button></div>
-                            <table>
-                                <thead><tr><th>Дата</th><th>Тип</th><th>Сумма</th><th>Статус</th></tr></thead>
-                                <tbody>
-                                    <tr><td>12.06</td><td>Оплата подписки</td><td class="row-money">+499 ₽</td><td><span class="tag pub">Зачислено</span></td></tr>
-                                    <tr><td>11.06</td><td>Разовая покупка</td><td class="row-money">+299 ₽</td><td><span class="tag pub">Зачислено</span></td></tr>
-                                    <tr><td>10.06</td><td>Вывод на карту</td><td style="color:var(--red);font-weight:700">-15 000 ₽</td><td><span class="tag sched">Отправлено</span></td></tr>
-                                    <tr><td>09.06</td><td>Возврат</td><td style="color:var(--red);font-weight:700">-499 ₽</td><td><span class="tag draft">Обработка</span></td></tr>
-                                </tbody>
-                            </table>
+                            <div class="table-scroll">
+                                <table>
+                                    <thead><tr><th>Дата</th><th>Тип</th><th>Сумма</th><th>Статус</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>12.06</td><td>Оплата подписки</td><td class="row-money">+499 ₽</td><td><span class="tag pub">Зачислено</span></td></tr>
+                                        <tr><td>11.06</td><td>Разовая покупка</td><td class="row-money">+299 ₽</td><td><span class="tag pub">Зачислено</span></td></tr>
+                                        <tr><td>10.06</td><td>Вывод на карту</td><td style="color:var(--red);font-weight:700">-15 000 ₽</td><td><span class="tag sched">Отправлено</span></td></tr>
+                                        <tr><td>09.06</td><td>Возврат</td><td style="color:var(--red);font-weight:700">-499 ₽</td><td><span class="tag draft">Обработка</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="card">
                             

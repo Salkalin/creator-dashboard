@@ -1,4 +1,22 @@
 // ============================================
+// SIDEBAR (MOBILE)
+// ============================================
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.toggle('open');
+    if (overlay) overlay.classList.toggle('show');
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+}
+
+// ============================================
 // НАВИГАЦИЯ
 // ============================================
 
@@ -15,6 +33,7 @@ const titles = {
 };
 
 function goto(page) {
+    closeSidebar();
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const targetPage = document.getElementById('page-' + page);
     if (targetPage) targetPage.classList.add('active');
@@ -1145,6 +1164,8 @@ function toggleTheme() {
         root.style.setProperty('--orange-soft', '#3A2615');
         document.getElementById('themeIcon').className = 'fa-solid fa-sun';
         document.getElementById('themeText').textContent = 'Светлая тема';
+        const mi = document.getElementById('themeIconMobile');
+        if (mi) mi.className = 'fa-solid fa-sun';
     } else {
         root.style.setProperty('--bg', '#F7F7F8');
         root.style.setProperty('--card', '#FFFFFF');
@@ -1154,6 +1175,8 @@ function toggleTheme() {
         root.style.setProperty('--orange-soft', '#FFF1E8');
         document.getElementById('themeIcon').className = 'fa-solid fa-moon';
         document.getElementById('themeText').textContent = 'Тёмная тема';
+        const mi = document.getElementById('themeIconMobile');
+        if (mi) mi.className = 'fa-solid fa-moon';
     }
 }
 
