@@ -753,15 +753,28 @@ html {
     flex-wrap: wrap;
 }
 
+/* Chip - базовые стили */
 .chip {
     padding: 7px 13px;
     border-radius: 20px;
-    border: 1px solid var(--line);
-    background: var(--card);
+    border: 1px solid var(--chip-border, var(--line));
+    background: var(--chip-bg, var(--card));
     font-size: 12.5px;
     font-weight: 500;
-    color: var(--muted);
+    color: var(--chip-text, var(--muted));
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chip:hover {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+.chip.active {
+    background: var(--chip-active-bg, var(--ink));
+    color: var(--chip-active-text, #fff);
+    border-color: var(--chip-active-bg, var(--ink));
 }
 
 .chip.active {
@@ -829,6 +842,7 @@ tbody tr:hover {
     color: var(--orange-dark);
 }
 
+/* Pill - базовые стили */
 .pill {
     padding: 3px 10px;
     border-radius: 20px;
@@ -836,19 +850,22 @@ tbody tr:hover {
     font-weight: 600;
 }
 
+/* Базовый уровень */
 .pill.base {
-    background: #F4F4F5;
-    color: var(--ink);
+    background: var(--pill-base-bg, #F4F4F5);
+    color: var(--pill-base-text, #1A1A1F);
 }
 
+/* Премиум уровень */
 .pill.prem {
-    background: var(--orange-soft);
-    color: var(--orange-dark);
+    background: var(--pill-prem-bg, #FFF1E8);
+    color: var(--pill-prem-text, #E85A0C);
 }
 
+/* VIP уровень */
 .pill.vip {
-    background: #FAF5FF;
-    color: #9333EA;
+    background: var(--pill-vip-bg, #FAF5FF);
+    color: var(--pill-vip-text, #9333EA);
 }
 
 .mini-avatar {
@@ -1682,4 +1699,90 @@ tbody tr:hover {
         font-size: 12px;
         padding: 10px 6px;
     }
+}
+/* ============================================
+   ТЁМНАЯ ТЕМА - ПРЯМЫЕ СТИЛИ
+   ============================================ */
+
+/* Когда на body есть класс dark-theme */
+body.dark-theme .chip {
+    background: #2D2D33 !important;
+    color: #E4E4E7 !important;
+    border-color: #3D3D44 !important;
+}
+
+body.dark-theme .chip.active {
+    background: #F4F4F5 !important;
+    color: #1A1A1F !important;
+    border-color: #F4F4F5 !important;
+}
+
+body.dark-theme .chip:hover {
+    background: #3D3D44 !important;
+    color: #FFFFFF !important;
+}
+
+/* Вкладки (tabs) в тёмной теме */
+body.dark-theme .tab {
+    color: #A1A1AA !important;
+}
+
+body.dark-theme .tab:hover {
+    color: #F4F4F5 !important;
+    background: #2D2D33 !important;
+}
+
+body.dark-theme .tab.active {
+    background: #FF6B1A !important;
+    color: #FFFFFF !important;
+}
+
+/* Pill в тёмной теме */
+body.dark-theme .pill.base {
+    background: #2D2D33 !important;
+    color: #F4F4F5 !important;
+}
+
+body.dark-theme .pill.prem {
+    background: #4A2A1A !important;
+    color: #FF8A4A !important;
+}
+
+body.dark-theme .pill.vip {
+    background: #2A1A4A !important;
+    color: #B47AFF !important;
+}
+
+/* Таблицы в тёмной теме */
+body.dark-theme table td,
+body.dark-theme table th {
+    color: #F4F4F5 !important;
+}
+
+body.dark-theme .list-row {
+    border-bottom-color: #2D2D33 !important;
+}
+
+body.dark-theme .list-row .small {
+    color: #A1A1AA !important;
+}
+
+/* Кнопки в тёмной теме */
+body.dark-theme .btn-ghost {
+    background: #2D2D33 !important;
+    color: #F4F4F5 !important;
+}
+
+body.dark-theme .btn-ghost:hover {
+    background: #3D3D44 !important;
+}
+
+body.dark-theme .btn-outline {
+    background: transparent !important;
+    color: #F4F4F5 !important;
+    border-color: #3D3D44 !important;
+}
+
+body.dark-theme .btn-outline:hover {
+    background: #2D2D33 !important;
 }

@@ -1528,28 +1528,64 @@ let dark = false;
 function toggleTheme() {
     dark = !dark;
     const root = document.documentElement;
+    const body = document.body;
+    
     if (dark) {
+        // Тёмная тема
         root.style.setProperty('--bg', '#16161A');
         root.style.setProperty('--card', '#1F1F24');
         root.style.setProperty('--ink', '#F4F4F5');
         root.style.setProperty('--muted', '#A1A1AA');
         root.style.setProperty('--line', '#2D2D33');
         root.style.setProperty('--orange-soft', '#3A2615');
+        
+        // Pill
+        root.style.setProperty('--pill-base-bg', '#2D2D33');
+        root.style.setProperty('--pill-base-text', '#F4F4F5');
+        root.style.setProperty('--pill-prem-bg', '#4A2A1A');
+        root.style.setProperty('--pill-prem-text', '#FF8A4A');
+        root.style.setProperty('--pill-vip-bg', '#2A1A4A');
+        root.style.setProperty('--pill-vip-text', '#B47AFF');
+        
+        // Chip (новые переменные)
+        root.style.setProperty('--chip-bg', '#2D2D33');
+        root.style.setProperty('--chip-text', '#F4F4F5');
+        root.style.setProperty('--chip-border', '#3D3D44');
+        root.style.setProperty('--chip-active-bg', '#F4F4F5');
+        root.style.setProperty('--chip-active-text', '#1A1A1F');
+        
         document.getElementById('themeIcon').className = 'fa-solid fa-sun';
         document.getElementById('themeText').textContent = 'Светлая тема';
-        const mi = document.getElementById('themeIconMobile');
-        if (mi) mi.className = 'fa-solid fa-sun';
+        
+        body.classList.add('dark-theme');
     } else {
+        // Светлая тема
         root.style.setProperty('--bg', '#F7F7F8');
         root.style.setProperty('--card', '#FFFFFF');
         root.style.setProperty('--ink', '#1A1A1F');
         root.style.setProperty('--muted', '#71717A');
         root.style.setProperty('--line', '#ECECEF');
         root.style.setProperty('--orange-soft', '#FFF1E8');
+        
+        // Pill
+        root.style.setProperty('--pill-base-bg', '#F4F4F5');
+        root.style.setProperty('--pill-base-text', '#1A1A1F');
+        root.style.setProperty('--pill-prem-bg', '#FFF1E8');
+        root.style.setProperty('--pill-prem-text', '#E85A0C');
+        root.style.setProperty('--pill-vip-bg', '#FAF5FF');
+        root.style.setProperty('--pill-vip-text', '#9333EA');
+        
+        // Chip
+        root.style.setProperty('--chip-bg', '#FFFFFF');
+        root.style.setProperty('--chip-text', '#71717A');
+        root.style.setProperty('--chip-border', '#ECECEF');
+        root.style.setProperty('--chip-active-bg', '#1A1A1F');
+        root.style.setProperty('--chip-active-text', '#FFFFFF');
+        
         document.getElementById('themeIcon').className = 'fa-solid fa-moon';
         document.getElementById('themeText').textContent = 'Тёмная тема';
-        const mi = document.getElementById('themeIconMobile');
-        if (mi) mi.className = 'fa-solid fa-moon';
+        
+        body.classList.remove('dark-theme');
     }
 }
 
